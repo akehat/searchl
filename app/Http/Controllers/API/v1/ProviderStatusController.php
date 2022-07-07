@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\ProviderStatus;
+use App\Http\Resources\v1\ProviderStatusResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProviderStatusController extends Controller
 {
@@ -15,7 +17,9 @@ class ProviderStatusController extends Controller
      */
     public function index()
     {
-        //
+        $providersStatus = ProviderStatus::all();
+        return response(['property' => ProviderStatusResource::collection($providersStatus), 'message' => 'Retrieved successfully'], 200);
+
     }
 
     /**
@@ -26,7 +30,36 @@ class ProviderStatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            // 'provider_id',
+            // 'is_available', // green, orange, red
+            // // 'location', // text
+            // 'longitude', // double
+            // 'latitude', // double
+            // 'range', // int
+            // 'range_format', // e.g. km
+            // 'search_string' // ?
+
+            'profession_type' => 'required|max:255',
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'base_location' => 'required|max:255',
+            'phone_number' => 'required|max:255',
+            'search_fields' => 'required|max:255',
+            'standard_work_hours' => 'required|min:3',
+            'emergency_availability' => 'required',
+            'share_exact_location' => 'required',
+            // 'property_name' => 'required|unique:properties|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response(['error' => $validator->errors(), 'Validation Error']);
+        }
+
+        $providerStatus = ProviderStatus::create($data);
+        return response(['providerstatus' => new ProviderStatusResource($providerStatus), 'message' => 'Provider Status Created Successfully'], 200);
     }
 
     /**
@@ -37,7 +70,7 @@ class ProviderStatusController extends Controller
      */
     public function show(ProviderStatus $providerStatus)
     {
-        //
+        return response(['provider' => new ProviderStatusResource($providerStatus), 'message' => 'Retrieved Successfully'], 200);
     }
 
     /**
@@ -49,7 +82,18 @@ class ProviderStatusController extends Controller
      */
     public function update(Request $request, ProviderStatus $providerStatus)
     {
-        //
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            // 'standard_work_hours' => 'min:3',
+        ]);
+
+        if ($validator->fails()) {
+            return response(['error' => $validator->errors(), 'Validation Error']);
+        }
+
+        $providerStatus->update($request->all());
+        return response(['provider' => new ProviderStatusResource($providerStatus), 'message' => 'Provider Updated Successfully'], 200);
     }
 
     /**
@@ -60,6 +104,7 @@ class ProviderStatusController extends Controller
      */
     public function destroy(ProviderStatus $providerStatus)
     {
-        //
+        $providerStatus->delete();
+        return response(['message' => 'Provider Deleted Successfully']);
     }
 }

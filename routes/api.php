@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\v1\ProviderController;
+use App\Http\Controllers\API\v1\ProviderStatusController;
+// use App\Http\Controllers\API\v1\ProviderStatisticsController;
 // use App\Http\Resources\v1\ProviderResource;
 // use App\Models\Provider;
 
@@ -39,5 +41,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 // });
 
 Route::apiResource('/v1/provider', ProviderController::class)->middleware('auth:api');
+Route::apiResource('/v1/providerstatus', ProviderStatusController::class)->middleware('auth:api');
+// Route::apiResource('/v1/providerstatistics', ProviderStatisticsController::class)->middleware('auth:api');
 
 
