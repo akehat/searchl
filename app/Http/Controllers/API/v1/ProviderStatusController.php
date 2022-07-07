@@ -33,25 +33,7 @@ class ProviderStatusController extends Controller
         $data = $request->all();
 
         $validator = Validator::make($data, [
-            // 'provider_id',
-            // 'is_available', // green, orange, red
-            // // 'location', // text
-            // 'longitude', // double
-            // 'latitude', // double
-            // 'range', // int
-            // 'range_format', // e.g. km
-            // 'search_string' // ?
-
-            'profession_type' => 'required|max:255',
-            'first_name' => 'required|max:255',
-            'last_name' => 'required|max:255',
-            'base_location' => 'required|max:255',
-            'phone_number' => 'required|max:255',
-            'search_fields' => 'required|max:255',
-            'standard_work_hours' => 'required|min:3',
-            'emergency_availability' => 'required',
-            'share_exact_location' => 'required',
-            // 'property_name' => 'required|unique:properties|max:255',
+            'provider_id' => 'required',
         ]);
 
         if ($validator->fails()) {
