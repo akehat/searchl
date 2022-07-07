@@ -11,12 +11,12 @@ class ProviderStatus extends Model
 
     protected $fillable = [
         'provider_id',
+        'is_available', // green, orange, red
         // 'location', // text
         'longitude', // double
         'latitude', // double
         'range', // int
         'range_format', // e.g. km
-        'search_string', // ?
-        'is_available' // green, orange, red
+        'search_string' // ?
     ];
 }
