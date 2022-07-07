@@ -19,7 +19,7 @@ class CreateProviderStatusesTable extends Migration
             $table->string('is_available')->default('green');
             $table->double('longitude')->nullable();
             $table->double('latitude')->nullable();
-            $table->integer('range')->default(10); // why is this here?
+            $table->integer('range')->default(10); // why is this here? search with client's defined range, or search according to providers range relative to client's location
             $table->string('range_format')->default('KM'); // e.g. km
             $table->string('search_string')->nullable(); // what's this for?
             $table->timestamps();
