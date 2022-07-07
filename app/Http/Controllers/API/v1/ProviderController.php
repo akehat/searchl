@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Provider;
-use App\Http\Resources\ProviderResource;
+use App\Http\Resources\v1\ProviderResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
