@@ -44,4 +44,5 @@ Route::apiResource('/v1/provider', ProviderController::class)->middleware('auth:
 Route::apiResource('/v1/providerstatus', ProviderStatusController::class)->middleware('auth:api');
 // Route::apiResource('/v1/providerstatistics', ProviderStatisticsController::class)->middleware('auth:api');
 
-
+Route::middleware('auth:api')->get('/v1/providersByProfession/{profession_type}', [ProviderController::class, 'getprovidersByProfession']);
+Route::middleware('auth:api')->get('/v1/availableproviders/{profession_type?}', [ProviderController::class, 'getAvailableProviders']);

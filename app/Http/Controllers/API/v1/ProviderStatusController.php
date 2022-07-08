@@ -17,8 +17,8 @@ class ProviderStatusController extends Controller
      */
     public function index()
     {
-        $providersStatus = ProviderStatus::all();
-        return response(['property' => ProviderStatusResource::collection($providersStatus), 'message' => 'Retrieved successfully'], 200);
+        $allProviderStatus = ProviderStatus::all();
+        return response(['property' => ProviderStatusResource::collection($allProviderStatus), 'message' => 'Retrieved successfully'], 200);
 
     }
 
@@ -41,7 +41,7 @@ class ProviderStatusController extends Controller
         }
 
         $providerStatus = ProviderStatus::create($data);
-        return response(['providerstatus' => new ProviderStatusResource($providerStatus), 'message' => 'Provider Status Created Successfully'], 200);
+        return response(['providerStatus' => new ProviderStatusResource($providerStatus), 'message' => 'Provider Status Created Successfully'], 200);
     }
 
     /**
@@ -52,7 +52,7 @@ class ProviderStatusController extends Controller
      */
     public function show(ProviderStatus $providerStatus)
     {
-        return response(['provider' => new ProviderStatusResource($providerStatus), 'message' => 'Retrieved Successfully'], 200);
+        return response(['providerStatus' => new ProviderStatusResource($providerStatus), 'message' => 'Retrieved Successfully'], 200);
     }
 
     /**
@@ -75,7 +75,7 @@ class ProviderStatusController extends Controller
         }
 
         $providerStatus->update($request->all());
-        return response(['provider' => new ProviderStatusResource($providerStatus), 'message' => 'Provider Updated Successfully'], 200);
+        return response(['providerStatus' => new ProviderStatusResource($providerStatus), 'message' => 'Provider Updated Successfully'], 200);
     }
 
     /**
@@ -87,6 +87,6 @@ class ProviderStatusController extends Controller
     public function destroy(ProviderStatus $providerStatus)
     {
         $providerStatus->delete();
-        return response(['message' => 'Provider Deleted Successfully']);
+        return response(['message' => 'ProviderStatus Deleted Successfully']);
     }
 }
