@@ -17,7 +17,7 @@ class ProviderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($id = null)
+    public function index()
     {
         $providers = Provider::all();
         return response(['property' => ProviderResource::collection($providers), 'message' => 'Retrieved successfully'], 200);

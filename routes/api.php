@@ -6,8 +6,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\v1\ProviderController;
 use App\Http\Controllers\API\v1\ProviderStatusController;
 // use App\Http\Controllers\API\v1\ProviderStatisticsController;
-// use App\Http\Resources\v1\ProviderResource;
-// use App\Models\Provider;
+use App\Http\Controllers\API\v1\SearchLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +42,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::apiResource('/v1/provider', ProviderController::class)->middleware('auth:api');
 Route::apiResource('/v1/providerstatus', ProviderStatusController::class)->middleware('auth:api');
 // Route::apiResource('/v1/providerstatistics', ProviderStatisticsController::class)->middleware('auth:api');
+// Route::apiResource('/v1/searchlogs', SearchLogController::class)->middleware('auth:api');
 
 Route::middleware('auth:api')->get('/v1/providersByProfession/{profession_type}', [ProviderController::class, 'getprovidersByProfession']);
 Route::middleware('auth:api')->get('/v1/availableproviders/{profession_type?}', [ProviderController::class, 'getAvailableProviders']);
