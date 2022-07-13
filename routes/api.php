@@ -6,7 +6,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\v1\ProviderController;
 use App\Http\Controllers\API\v1\ProviderStatusController;
 // use App\Http\Controllers\API\v1\ProviderStatisticsController;
-use App\Http\Controllers\API\v1\SearchLogController;
+// use App\Http\Controllers\API\v1\SearchLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,4 +45,4 @@ Route::apiResource('/v1/providerstatus', ProviderStatusController::class)->middl
 // Route::apiResource('/v1/searchlogs', SearchLogController::class)->middleware('auth:api');
 
 Route::middleware('auth:api')->get('/v1/providersByProfession/{profession_type}', [ProviderController::class, 'getprovidersByProfession']);
-Route::middleware('auth:api')->get('/v1/availableproviders/{profession_type?}', [ProviderController::class, 'getAvailableProviders']);
+Route::middleware('auth:api')->get('/v1/availableproviders/{profession_type?}/{longitude?}/{latitude?}/{emergency?}/{range?}/{range_format?}', [ProviderController::class, 'getAvailableProviders']);

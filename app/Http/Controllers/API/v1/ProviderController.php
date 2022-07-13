@@ -111,38 +111,41 @@ class ProviderController extends Controller
     }
 
 
-    //TODO
-
-    // add status records
-    // left join --> join
-    // handle longitude, latitude & range:
-    // a. return 404 if not stated
-    // b. filter according to long/lat & range
-
-    //Save in the DB according to KM. if searching according to MI - convert to KM.
-
-    // too many params. change to POST ?
+    //TODO abs() is a temporary hack
 
     /**
      * This function returns providers that:
      * 1. confirm to the profession type
      * 2. are available (green. also orange for emergency)
      * 3. in the selected range
+     *
+     * Save in the DB according to KM. if searching according to MI - convert to KM.
+     * emergency: 0 or 1
+     *
+     * too many params. change to POST ?
+     * suggestion: create search object. POST to store (with statistics) and search, and return available providers
      */
-    public function getAvailableProviders($profession_type=null, $range = 10, $range_type = 'KM', $longitude=null, $latitude=null, $emergency=false)
+    public function getAvailableProviders($profession_type=null,  $longitude=null, $latitude=null, $emergency=false, $range = 10, $range_type = 'KM')
     {
-        if (!$profession_type) {
+        if (!$profession_type || !$longitude || !$latitude) {
             return response(['message' => 'not found'], 404);
         }
 
-        //TODO - check
-        $availableMode = $emergency ? "'green' or 'orange'" : "green";
+        if ($range_type == 'MI') $range.=1.60934; // convert to KM
+        // TODO check this:
+        $coordRadius = $range / 69;
+
+        $availableMode = $emergency ? ['green','orange'] : ["green"];
 
         $allProviders = DB::table('providers')
-            ->leftJoin('provider_statuses', 'providers.id', '=', 'provider_statuses.provider_id')
+            ->Join('provider_statuses', 'providers.id', '=', 'provider_statuses.provider_id')
             ->select('providers.id as providers_id','providers.*', 'provider_statuses.*')
             ->where('profession_type', $profession_type)
-            // ->where('is_available', $availableMode)
+            ->where(DB::raw('ABS(latitude)'), '>=', abs($latitude) - $coordRadius)
+            ->where(DB::raw('ABS(latitude)'), '<=', abs($latitude) + $coordRadius)
+            ->where(DB::raw('ABS(longitude)'), '>=', abs($longitude) - $coordRadius)
+            ->where(DB::Raw('ABS(longitude)'), '<=', abs($longitude) + $coordRadius)
+            ->whereIn('is_available', $availableMode)
             ->get();
 
         return response(['avilableProviders' => json_decode($allProviders), 'message' => 'Retrieved successfully'], 200);
