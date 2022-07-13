@@ -25,8 +25,6 @@ use App\Http\Controllers\API\v1\ProviderStatusController;
  * https://laraveldaily.com/laravel-api-404-response-return-json-instead-of-webpage-error/#comment-508883
  */
 
-
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

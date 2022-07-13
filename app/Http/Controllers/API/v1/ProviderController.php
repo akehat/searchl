@@ -5,7 +5,8 @@ namespace App\Http\Controllers\API\v1;
 use App\Http\Controllers\Controller;
 use App\Models\Provider;
 use App\Http\Resources\v1\ProviderResource;
-use App\Models\ProviderStatus;
+
+// use App\Models\ProviderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -20,7 +21,7 @@ class ProviderController extends Controller
     public function index()
     {
         $providers = Provider::all();
-        return response(['property' => ProviderResource::collection($providers), 'message' => 'Retrieved successfully'], 200);
+        return response(['providers' => ProviderResource::collection($providers), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**

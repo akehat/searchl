@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\v1;
 use App\Http\Controllers\Controller;
 use App\Models\ProviderStatus;
 use App\Http\Resources\v1\ProviderStatusResource;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,7 +19,7 @@ class ProviderStatusController extends Controller
     public function index()
     {
         $allProviderStatus = ProviderStatus::all();
-        return response(['property' => ProviderStatusResource::collection($allProviderStatus), 'message' => 'Retrieved successfully'], 200);
+        return response(['providerstatus' => ProviderStatusResource::collection($allProviderStatus), 'message' => 'Retrieved successfully'], 200);
 
     }
 
@@ -75,7 +76,7 @@ class ProviderStatusController extends Controller
         }
 
         $providerStatus->update($request->all());
-        return response(['providerStatus' => new ProviderStatusResource($providerStatus), 'message' => 'Provider Updated Successfully'], 200);
+        return response(['providerStatus' => new ProviderStatusResource($providerStatus), 'message' => 'providerStatus Updated Successfully'], 200);
     }
 
     /**
