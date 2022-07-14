@@ -53,6 +53,7 @@ class ProviderStatusController extends Controller
      */
     public function show(ProviderStatus $providerStatus)
     {
+        // return print_r($providerStatus,1);
         return response(['providerStatus' => new ProviderStatusResource($providerStatus), 'message' => 'Retrieved Successfully'], 200);
     }
 
@@ -90,4 +91,50 @@ class ProviderStatusController extends Controller
         $providerStatus->delete();
         return response(['message' => 'ProviderStatus Deleted Successfully']);
     }
+
+    // implicit routes weren't working here, created explicit functions
+    public function showExplicit($id)
+    {
+        $providerStatus = ProviderStatus::find($id);
+        if (!$providerStatus) {
+            return response(['message' => 'not found'], 404);
+        }
+
+        return response(['providerStatus' => new ProviderStatusResource($providerStatus), 'message' => 'Retrieved Successfully'], 200);
+    }
+
+
+    public function updateExplicit(Request $request, $id)
+    {
+        $providerStatus = ProviderStatus::find($id);
+        if (!$providerStatus) {
+            return response(['message' => 'not found'], 404);
+        }
+
+        $data = $request->all();
+
+        $validator = Validator::make($data, [
+            // 'standard_work_hours' => 'min:3',
+        ]);
+
+        if ($validator->fails()) {
+            return response(['error' => $validator->errors(), 'Validation Error']);
+        }
+
+        $providerStatus->update($request->all());
+
+        return response(['providerStatus' => new ProviderStatusResource($providerStatus), 'message' => 'Updated Successfully'], 200);
+    }
+
+    public function destroyExplicit($id)
+    {
+        $providerStatus = ProviderStatus::find($id);
+        if (!$providerStatus) {
+            return response(['message' => 'not found'], 404);
+        }
+        $providerStatus->delete();
+        return response(['message' => 'ProviderStatus Deleted Successfully']);
+
+    }
+
 }

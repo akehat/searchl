@@ -37,6 +37,12 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 //     $request->user()->token()->revoke();
 // });
 
+//explicit (implicit wasn't working)
+Route::middleware('auth:api')->get('/v1/providerstatus/{id}', [ProviderStatusController::class, 'showExplicit']);
+Route::middleware('auth:api')->patch('/v1/providerstatus/{id}', [ProviderStatusController::class, 'updateExplicit']);
+Route::middleware('auth:api')->delete('/v1/providerstatus/{id}', [ProviderStatusController::class, 'destroyExplicit']);
+
+
 Route::apiResource('/v1/provider', ProviderController::class)->middleware('auth:api');
 Route::apiResource('/v1/providerstatus', ProviderStatusController::class)->middleware('auth:api');
 // Route::apiResource('/v1/providerstatistics', ProviderStatisticsController::class)->middleware('auth:api');
@@ -44,3 +50,4 @@ Route::apiResource('/v1/providerstatus', ProviderStatusController::class)->middl
 
 Route::middleware('auth:api')->get('/v1/providersByProfession/{profession_type}', [ProviderController::class, 'getprovidersByProfession']);
 Route::middleware('auth:api')->get('/v1/availableproviders/{profession_type?}/{longitude?}/{latitude?}/{emergency?}/{range?}/{range_format?}', [ProviderController::class, 'getAvailableProviders']);
+
